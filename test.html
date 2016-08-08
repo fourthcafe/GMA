@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Map</title>
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="utf-8">
+	<style>
+	html, body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	.page_wrapper {
+		width: 1280px;
+		margin: 0 auto;
+	}
+
+	.title_wrapper {
+		background-color: #eee;
+		height: 50px;
+	}
+
+	.content_wrapper {
+		border: 1px solid #ddd;
+		height: 500px;
+	}
+
+	.map_wapper {
+		width: 500px;
+		height: 350px;
+		margin: 0 auto;
+	}
+
+	.map {
+		height: 100%;
+	}
+	</style>
+</head>
+<body>
+	<div class="page_wrapper">
+		<div class="title_wrapper">
+			<div class="title">
+				Funbit TV HEADER
+			</div>
+		</div>
+		<div class="content_wrapper">
+			<div class="container">
+				container
+			</div>
+			<div class="map_wapper">
+				Wooyoo
+				<div id="map_woo" class="map"></div>
+				MM Cafe
+				<div id="map_mm" class="map"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+
+	var map_woo;
+	var map_mm;
+	function initMap() {
+
+		// https://www.google.com/maps/place/Wooyoo/@-6.1117571,106.7418405,18z/data=!4m8!1m2!3m1!2sWooyoo!3m4!1s0x0:0xdede36a532f3691e!8m2!3d-6.1114523!4d106.7423856
+		// -6.1114523 106.7423856
+		var wooyooLatLng = {lat: -6.1114523, lng: 106.7423856};
+		map_woo = new google.maps.Map(document.getElementById('map_woo'), {
+			// center: {lat: -34.397, lng: 150.644},
+			center: wooyooLatLng,
+			zoom: 18
+		});
+
+		var wooyooMarker = new google.maps.Marker({
+			position: wooyooLatLng,
+			map: map_woo,
+			title: "Wooyoo"
+		});
+		wooyooMarker.addListener('click', toggleBounce);
+
+		// https://www.google.com/maps/place/MM+Cafe/@-6.5824364,106.7781708,18z/data=!4m12!1m6!3m5!1s0x0:0xebc8c42a5327531b!2sMM+Cafe!8m2!3d-6.5824936!4d106.7786711!3m4!1s0x0:0xebc8c42a5327531b!8m2!3d-6.5824936!4d106.7786711
+		var mmCafelatLng = {lat: -6.5824936, lng: 106.7786711};
+		map_mmCafe = new google.maps.Map(document.getElementById('map_mm'), {
+			center: mmCafelatLng,
+			zoom: 18
+		});
+
+		var mmCafeMarker = new google.maps.Marker({
+			position: mmCafelatLng,
+			map: map_mmCafe,
+			title: "MM Cafe"
+		});
+
+		// 추가 파라메터
+		// language	언어 현지화
+		// region	지역 현지화
+	}
+
+	function toggleBounce() {
+		if (marker.getAnimation() !== null) {
+			marker.setAnimation(null);
+		} else {
+			marker.setAnimation(google.maps.Animation.BOUNCE);
+		}
+	}
+
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmk6pn3dCkkH2qFRIGO6sVkgqVaA-eg0Y&callback=initMap" async defer></script>
+</body>
+</html>

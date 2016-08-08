@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Map</title>
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="utf-8">
+	<style>
+	html, body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	.page_wrapper {
+		width: 1280px;
+		margin: 0 auto;
+	}
+
+	.title_wrapper {
+		background-color: #eee;
+		height: 50px;
+	}
+
+	.content_wrapper {
+		border: 1px solid #ddd;
+		padding: 10px;
+	}
+
+	.map_wapper {
+		width: 1000px;
+		height: 800px;
+		margin: 0 auto;
+	}
+
+	.map {
+		height: 100%;
+	}
+	</style>
+</head>
+<body>
+	<div class="page_wrapper">
+		<div class="title_wrapper">
+			<div class="title">
+				Funbit TV HEADER
+			</div>
+		</div>
+		<div>
+			<div>
+				<strong>Start: </strong>
+				<select id="start" onchange="calcRoute();">
+					<option value="chicago, il">Chicago</option>
+					<option value="st louis, mo">St Louis</option>
+					<option value="joplin, mo">Joplin, MO</option>
+					<option value="oklahoma city, ok">Oklahoma City</option>
+					<option value="amarillo, tx">Amarillo</option>
+					<option value="gallup, nm">Gallup, NM</option>
+					<option value="flagstaff, az">Flagstaff, AZ</option>
+					<option value="winona, az">Winona</option>
+					<option value="kingman, az">Kingman</option>
+					<option value="barstow, ca">Barstow</option>
+					<option value="san bernardino, ca">San Bernardino</option>
+					<option value="los angeles, ca">Los Angeles</option>
+				</select>
+				<strong>End: </strong>
+				<select id="end" onchange="calcRoute();">
+					<option value="chicago, il">Chicago</option>
+					<option value="st louis, mo">St Louis</option>
+					<option value="joplin, mo">Joplin, MO</option>
+					<option value="oklahoma city, ok">Oklahoma City</option>
+					<option value="amarillo, tx">Amarillo</option>
+					<option value="gallup, nm">Gallup, NM</option>
+					<option value="flagstaff, az">Flagstaff, AZ</option>
+					<option value="winona, az">Winona</option>
+					<option value="kingman, az">Kingman</option>
+					<option value="barstow, ca">Barstow</option>
+					<option value="san bernardino, ca">San Bernardino</option>
+					<option value="los angeles, ca">Los Angeles</option>
+				</select>
+				<select id="transit" onchange="calcRoute();">
+					<option value="DRIVING">DRIVING</option>
+					<option value="BICYCLING">BICYCLING</option>
+					<option value="TRANSIT">TRANSIT</option>
+					<option value="WALKING">WALKING</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="content_wrapper">
+			<div class="container">
+				container
+			</div>
+			<div class="map_wapper">
+				<div id="map" class="map"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+	var directionsDisplay;
+	var directionsService;
+
+	function initMap() {
+		directionsService = new google.maps.DirectionsService();
+		var map;
+
+
+		directionsDisplay = new google.maps.DirectionsRenderer();
+		var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+		var mapOptions = {
+			zoom:7,
+			center: chicago
+		}
+		map = new google.maps.Map(document.getElementById("map"), mapOptions);
+		directionsDisplay.setMap(map);
+	}
+
+	function calcRoute() {
+		var start = document.getElementById("start").value;
+		var end = document.getElementById("end").value;
+		var transit = document.getElementById("transit").value;
+
+		var request = {
+			origin:start,
+			destination:end,
+			travelMode: google.maps.TravelMode.TRANSIT
+		};
+
+		var requestTransit = {
+			origin:start,
+			destination:end,
+			travelMode: transit
+		};
+
+		console.log(requestTransit);
+
+
+		directionsService.route(requestTransit, function(result, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+				directionsDisplay.setDirections(result);
+			} else {
+				console.log(result);
+				console.log(status);
+			}
+		});
+	}
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmk6pn3dCkkH2qFRIGO6sVkgqVaA-eg0Y&callback=initMap" async defer></script>
+</body>
+</html>

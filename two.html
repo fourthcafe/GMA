@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Map</title>
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="utf-8">
+	<style>
+	html, body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	.page_wrapper {
+		width: 1280px;
+		margin: 0 auto;
+	}
+
+	.title_wrapper {
+		background-color: #eee;
+		height: 50px;
+	}
+
+	.content_wrapper {
+		border: 1px solid #ddd;
+		padding: 10px;
+	}
+
+	.map_wapper {
+		width: 1000px;
+		height: 800px;
+		margin: 0 auto;
+	}
+
+	.map {
+		height: 100%;
+	}
+	</style>
+</head>
+<body>
+	<div class="page_wrapper">
+		<div class="title_wrapper">
+			<div class="title">
+				Funbit TV HEADER
+			</div>
+		</div>
+		<div class="content_wrapper">
+			<div class="container">
+				container
+			</div>
+			<div class="map_wapper">
+				<div id="map_wooyoo" class="map"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+	function initMap() {
+		// 첫번째 좌표 파라메터: 지도의 센터 위치
+		// 두번째 좌표 파라메터: 마커
+
+		// Wooyoo
+		// https://www.google.com/maps/place/Wooyoo/@-6.1117571,106.7418405,18z/data=!4m8!1m2!3m1!2sWooyoo!3m4!1s0x0:0xdede36a532f3691e!8m2!3d-6.1114523!4d106.7423856
+
+		// MM Cafe
+		// https://www.google.com/maps/place/MM+Cafe/@-6.5824364,106.7781708,18z/data=!4m12!1m6!3m5!1s0x0:0xebc8c42a5327531b!2sMM+Cafe!8m2!3d-6.5824936!4d106.7786711!3m4!1s0x0:0xebc8c42a5327531b!8m2!3d-6.5824936!4d106.7786711
+		var mapCenter = {lat: -6.359078, lng: 106.750824};
+		var map_wooyoo = new google.maps.Map(document.getElementById('map_wooyoo'), {
+			center: mapCenter,
+			zoom: 11
+		});
+
+		var wooyoo_LatLng = {lat: -6.1114523, lng: 106.7423856};
+		var wooyoo_marker = new google.maps.Marker({
+			position: wooyoo_LatLng,
+			map: map_wooyoo,
+			title: "Wooyoo"
+		});
+
+		var wooyoo_infoWindow = new google.maps.InfoWindow({
+			content: "위유",
+			maxWidth: "300"
+		});
+
+		google.maps.event.addListener(wooyoo_marker, "click", function() {
+			wooyoo_infoWindow.open(map_wooyoo, wooyoo_marker);
+		});
+
+
+		var mmCafe_LatLng = {lat: -6.5824936, lng: 106.7786711};
+		var mmCafe_marker = new google.maps.Marker({
+			position: mmCafe_LatLng,
+			map: map_wooyoo,
+			title: "MM Cafe"
+		});
+
+		var mmCafe_infoWindow = new google.maps.InfoWindow({
+			content: "MM 카페",
+			maxWidth: "300"
+		});
+
+		google.maps.event.addListener(mmCafe_marker, "click", function() {
+			mmCafe_infoWindow.open(map_wooyoo, mmCafe_marker);
+		});
+
+		// 추가 파라메터
+		// language	언어 현지화
+		// region	지역 현지화
+
+
+		// 마커 애니메이트
+		// https://developers.google.com/maps/documentation/javascript/markers?hl=ko
+	}
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmk6pn3dCkkH2qFRIGO6sVkgqVaA-eg0Y&callback=initMap" async defer></script>
+</body>
+</html>
