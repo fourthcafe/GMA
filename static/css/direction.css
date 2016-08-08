@@ -1,0 +1,32 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.page_wrapper {
+	width: 1280px;
+	margin: 0 auto;
+}
+
+.title_wrapper {
+	background-color: #eee;
+	height: 50px;
+}
+
+.content_wrapper {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+.search_wrapper{
+	margin-bottom: 10px;
+}
+
+.map_wapper {
+	width: 1000px;
+}
+
+.map {
+	height: 800px;
+}

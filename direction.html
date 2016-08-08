@@ -4,41 +4,10 @@
 	<title>Simple Map</title>
 	<meta name="viewport" content="initial-scale=1.0">
 	<meta charset="utf-8">
-	<style>
-	html, body {
-		height: 100%;
-		margin: 0;
-		padding: 0;
-	}
-
-	.page_wrapper {
-		width: 1280px;
-		margin: 0 auto;
-	}
-
-	.title_wrapper {
-		background-color: #eee;
-		height: 50px;
-	}
-
-	.content_wrapper {
-		border: 1px solid #ddd;
-		padding: 10px;
-	}
-
-	.search_wrapper{
-		margin-bottom: 10px;
-	}
-
-	.map_wapper {
-		width: 1000px;
-		margin: 0 auto;
-	}
-
-	.map {
-		height: 800px;
-	}
-	</style>
+	<link type="text/css" rel="stylesheet" charset="utf-8" href="static/css/direction.css"/>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmk6pn3dCkkH2qFRIGO6sVkgqVaA-eg0Y&callback=initMap" async defer></script>
+	<script type="text/javascript" src="static/js/direction.js"></script>
 </head>
 <body>
 	<div class="page_wrapper">
@@ -67,106 +36,17 @@
 			<div class="container">
 				<div class="map_wapper">
 					<div id="map" class="map"></div>
+					<div class="store_container">
+						Funbit Store List
+						<ul class="store_list">
+							<ol data-name="Wooyoo">Wooyoo</ol>
+							<ol data-name="MM Cafe">MM Cafe</ol>
+						</ul>
+					</div>
 					<div id="directionsPanel"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-	<script>
-	function initMap() {
-		var directionsDisplay = new google.maps.DirectionsRenderer();
-
-		var mapCenter = {lat: -6.359078, lng: 106.750824};
-		var mapOptions = {
-			zoom: 11,
-			center: mapCenter
-		}
-		var map_wooyoo = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-		wooyoo(map_wooyoo);
-		mmCafe(map_wooyoo);
-
-		directionsDisplay.setMap(map_wooyoo);
-		directionsDisplay.setPanel(document.getElementById("directionsPanel"));
-
-		document.getElementById("search").addEventListener("click", function() {
-			calcRoute(directionsDisplay);
-		});
-	}
-
-	function calcRoute(directionsDisplay) {
-		var directionsService = new google.maps.DirectionsService();
-
-		var start = document.getElementById("start").value;
-		var end = document.getElementById("end").value;
-		var mode = document.getElementById("transit").value;
-
-		var request = {
-			origin:start,
-			destination:end,
-			travelMode: mode
-		};
-
-		directionsService.route(request, function(result, status) {
-			if (status == google.maps.DirectionsStatus.OK) {
-				directionsDisplay.setDirections(result);
-
-			} else {
-				alert(status);
-				console.log("===== directionStatus isn`t OK =====");
-				console.log(result);
-				console.log(status);
-			}
-		});
-	}
-
-	function wooyoo(map_wooyoo) {
-		// wooyoo 좌표
-		var wooyoo_LatLng = {lat: -6.1114523, lng: 106.7423856};
-		var wooyoo_marker = new google.maps.Marker({
-			position: wooyoo_LatLng,
-			map: map_wooyoo,
-			title: "Wooyoo"
-		});
-		// wooyoo 마커
-		var wooyoo_infoWindow = new google.maps.InfoWindow({
-			content: "위유",
-			maxWidth: "300"
-		});
-
-		google.maps.event.addListener(wooyoo_marker, "click", function() {
-			wooyoo_infoWindow.open(map_wooyoo, wooyoo_marker);
-		});
-
-		google.maps.event.addListener(wooyoo_marker, "click", function() {
-			map_wooyoo.setMap({
-				center: wooyoo_LatLng
-			});
-		});
-	}
-
-	function mmCafe(map_wooyoo) {
-		// mm cafe 좌표
-		var mmCafe_LatLng = {lat: -6.5824936, lng: 106.7786711};
-		var mmCafe_marker = new google.maps.Marker({
-			position: mmCafe_LatLng,
-			map: map_wooyoo,
-			title: "MM Cafe"
-		});
-
-		// mm cafe 마커
-		var mmCafe_infoWindow = new google.maps.InfoWindow({
-			content: "MM 카페",
-			maxWidth: "300"
-		});
-
-		google.maps.event.addListener(mmCafe_marker, "click", function() {
-			mmCafe_infoWindow.open(map_wooyoo, mmCafe_marker);
-		});
-	}
-	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmk6pn3dCkkH2qFRIGO6sVkgqVaA-eg0Y&callback=initMap" async defer></script>
 </body>
 </html>
