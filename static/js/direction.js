@@ -29,8 +29,9 @@ function initMap() {
 		drawMarker(map, store);
 	});
 
+	var directionsDisplay = new google.maps.DirectionsRenderer();
 	document.getElementById("search").addEventListener("click", function() {
-		calcRoute(map);
+		calcRoute(map, directionsDisplay);
 	});
 
 	google.maps.event.addListener(map, "click", function(event) {
@@ -118,8 +119,7 @@ function drawMarker(map, store) {
 	$("[data-name='" + store.title + "']").on("click", markerClickEvent);
 }
 
-function calcRoute(map) {
-	var directionsDisplay = new google.maps.DirectionsRenderer();
+function calcRoute(map, directionsDisplay) {
 	directionsDisplay.setMap(map)
 	directionsDisplay.setPanel(document.getElementById("directionsPanel"));
 
@@ -140,7 +140,11 @@ function calcRoute(map) {
 			directionsDisplay.setDirections(result);
 
 		} else {
-			alert(status);
+			if (status === "ZERO_RESULTS") {
+				alert("결과값이 없습니다.");
+			} else {
+				alert(status);
+			}
 			console.log("===== directionStatus isn`t OK =====");
 			console.log(result);
 			console.log(status);
