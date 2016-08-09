@@ -1,17 +1,3 @@
-var obj = {
-	a: 3,
-	b: "alphabet",
-	c: function() {
-		return this.a + this.b;
-	}
-}
-
-var test = {
-	debug: function(msg) {
-		console.log(msg);
-	}
-}
-
 var storeInfo = [
 	{
 		position: {
