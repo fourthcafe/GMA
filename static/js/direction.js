@@ -92,18 +92,43 @@ function extractAddress(marker, latlng) {
 					infoWindow.open(map, marker);
 				});
 
-				marker.addListener("rightclick", function(event) {
+				marker.addListener("dragstart", function() {
+					console.log("dragstart");
+					infoWindow.close();
+				});
+
+				marker.addListener("rightclick", function() {
 					marker.setMap(null);
 				});
 
-				$start = $("#start");
-				$end = $("#end");
-				if ($start.val() === "") {
-					$start.val(address_nm);
+				console.log("extractAddress: " + address_nm);
 
-				} else {
-					$end.val(address_nm);
-				}
+				marker.addListener("dragend", function(event) {
+					console.log("dragend");
+					dragMarker(marker, infoWindow, event.latLng);
+				});
+			}
+		} else {
+			alert('주소 가져오기 오류!');
+		}
+	});
+}
+
+function dragMarker(marker, infoWindow, latlng) {
+	console.log("call dragMarker");
+
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode({'latLng': latlng}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			if (results[0]) {
+				var address_nm = results[0].formatted_address;
+				infoWindow.setContent(address_nm);
+
+				console.log("dragMarker: " + address_nm);
+
+				marker.addListener("dragend", function(event) {
+					dragMarker(marker, event.latLng);
+				});
 			}
 		} else {
 			alert('주소 가져오기 오류!');
