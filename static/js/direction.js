@@ -18,7 +18,7 @@ var storeInfo = [
 ];
 
 function initMap() {
-	var mapCenter = {lat: -6.359078, lng: 106.750824};
+	var mapCenter = {lat: -6.345078, lng: 106.750824};
 	var mapOptions = {
 		zoom: 11,
 		center: mapCenter
@@ -115,7 +115,6 @@ function drawMarker(map, store) {
 	}
 
 	marker.addListener("click", markerClickEvent);
-
 	$("[data-name='" + store.title + "']").on("click", markerClickEvent);
 }
 

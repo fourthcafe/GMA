@@ -24,9 +24,27 @@ html, body {
 }
 
 .map_wapper {
-	width: 1000px;
 }
 
 .map {
 	height: 800px;
+}
+
+.right-panel {
+	width: 350px;
+	margin: 0 10px;
+	float: right;
+}
+
+.store_container {
+}
+
+.store_list li {
+	cursor: pointer;
+}
+
+#directionsPanel {
+	position: relative;
+	overflow: auto;
+	height: 500px;
 }
