@@ -14,6 +14,14 @@ var storeInfo = [
 		},
 		title: "MM Cafe",
 		content: "MM 카페"
+	},
+	{
+		position: {
+			lat: 37.4022778,
+			lng: 127.1108385
+		},
+		title: "My Postion",
+		content: "My Postion"
 	}
 ];
 
@@ -34,9 +42,24 @@ function initMap() {
 		calcRoute(map, directionsDisplay);
 	});
 
-	google.maps.event.addListener(map, "click", function(event) {
+	document.getElementById("currentPlace").addEventListener("click", currentPlace);
+
+	// google.maps.event.addListener(map, "click", function(event) {
+	map.addListener("click", function(event) {
 		placeMarker(map, event.latLng);
 	});
+}
+
+// 현재 위치 가져오기. 정상적 웹서비스에서만 작동 가능한 것 같음
+function currentPlace() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			console.log(position.coords.latitude);
+			console.log(position.coords.longitude);
+		});
+	} else {
+		console.log("what the?");
+	}
 }
 
 
