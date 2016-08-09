@@ -1,3 +1,17 @@
+var obj = {
+	a: 3,
+	b: "alphabet",
+	c: function() {
+		return this.a + this.b;
+	}
+}
+
+var test = {
+	debug: function(msg) {
+		console.log(msg);
+	}
+}
+
 var storeInfo = [
 	{
 		position: {
@@ -42,7 +56,7 @@ function initMap() {
 		calcRoute(map, directionsDisplay);
 	});
 
-	document.getElementById("currentPlace").addEventListener("click", currentPlace);
+	// document.getElementById("currentPlace").addEventListener("click", currentPlace);
 
 	// google.maps.event.addListener(map, "click", function(event) {
 	map.addListener("click", function(event) {
@@ -58,7 +72,7 @@ function currentPlace() {
 			console.log(position.coords.longitude);
 		});
 	} else {
-		console.log("what the?");
+		alert("Can`t use geolocation");
 	}
 }
 
@@ -68,31 +82,12 @@ function placeMarker(map, location) {
 	var marker = new google.maps.Marker({
 		position: location,
 		map: map,
-		title: "클릭 추가"
+		title: "오른 클릭 시 닫기",
+		icon: "http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
+		draggable: true
 	});
 
 	extractAddress(marker, location);
-}
-
-// 추가한 마커 클릭 시 주소 노출
-function attachMessage(marker, latlng) {
-	var geocoder = new google.maps.Geocoder();
-	geocoder.geocode({'latLng': latlng}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-			if (results[0]) {
-				var address_nm = results[0].formatted_address;
-				var infowindow = new google.maps.InfoWindow({
-					content: address_nm,
-					size: new google.maps.Size(50,50)
-				});
-				google.maps.event.addListener(marker, 'click', function() {
-					infowindow.open(map, marker);
-				});
-			}
-		} else {
-			alert('주소 가져오기 오류!');
-		}
-	});
 }
 
 // 지도 클릭 시 인풋창 주소값 넣기
@@ -102,6 +97,19 @@ function extractAddress(marker, latlng) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			if (results[0]) {
 				var address_nm = results[0].formatted_address;
+				var infoWindow = new google.maps.InfoWindow({
+					content: address_nm,
+					size: new google.maps.Size(50,50)
+				});
+
+				marker.addListener('click', function() {
+					infoWindow.open(map, marker);
+				});
+
+				marker.addListener("rightclick", function(event) {
+					marker.setMap(null);
+				});
+
 				$start = $("#start");
 				$end = $("#end");
 				if ($start.val() === "") {
