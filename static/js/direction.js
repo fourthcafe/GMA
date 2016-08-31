@@ -152,7 +152,7 @@ function drawMarker(map, store) {
 	// google.maps.event.addListener(marker, "click", function() {
 	var markerClickEvent = function() {
 		map.setCenter(store.position);
-		map.setZoom(18);
+		map.setZoom(10);
 		infoWindow.open(map, marker);
 	}
 
